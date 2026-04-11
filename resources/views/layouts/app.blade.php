@@ -104,8 +104,9 @@
 
             @if (auth()->user()->isAdmin())
                 <div class="nav-section-label">Administrasi</div>
-                <a href="#" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                    <i class="bi bi-people"></i> Manajemen Pengguna
+                <a href="{{ route('users.index') }}"
+                    class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"> <i class="bi bi-people"></i>
+                    Manajemen Pengguna
                 </a>
             @endif
 
