@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\PemasokController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -25,5 +26,6 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::middleware('role:admin,pemilik')->group(function () {
 
         Route::resource('bahan-baku', BahanBakuController::class);
+        Route::resource('pemasok', PemasokController::class);
     });
 });
