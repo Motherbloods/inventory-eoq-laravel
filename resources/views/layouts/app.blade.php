@@ -36,8 +36,9 @@
 
             @if (auth()->user()->isAdmin() || auth()->user()->isPemilik())
                 <div class="nav-section-label">Data Master</div>
-                <a href="#" class="nav-link {{ request()->routeIs('bahan-baku.*') ? 'active' : '' }}">
-                    <i class="bi bi-box2"></i> Bahan Baku
+                <a href="{{ route('bahan-baku.index') }}"
+                    class="nav-link {{ request()->routeIs('bahan-baku.*') ? 'active' : '' }}"> <i
+                        class="bi bi-box2"></i> Bahan Baku
                 </a>
                 <a href="#" class="nav-link {{ request()->routeIs('pemasok.*') ? 'active' : '' }}">
                     <i class="bi bi-truck"></i> Pemasok
