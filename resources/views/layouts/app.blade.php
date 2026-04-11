@@ -40,7 +40,8 @@
                     class="nav-link {{ request()->routeIs('bahan-baku.*') ? 'active' : '' }}"> <i
                         class="bi bi-box2"></i> Bahan Baku
                 </a>
-                <a href="#" class="nav-link {{ request()->routeIs('pemasok.*') ? 'active' : '' }}">
+                <a href="{{ route('pemasok.index') }}"
+                    class="nav-link {{ request()->routeIs('pemasok.*') ? 'active' : '' }}">
                     <i class="bi bi-truck"></i> Pemasok
                 </a>
             @endif
