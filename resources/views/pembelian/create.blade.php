@@ -7,7 +7,6 @@
     <form action="{{ route('pembelian.store') }}" method="POST" id="formPembelian">
         @csrf
         <div class="row g-3">
-            {{-- Header --}}
             <div class="col-12">
                 <div class="card">
                     <div class="card-header"><span class="card-title">Informasi Pembelian</span></div>
@@ -44,7 +43,6 @@
                 </div>
             </div>
 
-            {{-- Item rows --}}
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
