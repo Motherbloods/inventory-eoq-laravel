@@ -48,7 +48,8 @@
 
             @if (auth()->user()->isAdmin())
                 <div class="nav-section-label">Transaksi</div>
-                <a href="#" class="nav-link {{ request()->routeIs('pembelian.*') ? 'active' : '' }}">
+                <a href="{{ route('pembelian.index') }}"
+                    class="nav-link {{ request()->routeIs('pembelian.*') ? 'active' : '' }}">
                     <i class="bi bi-cart-plus"></i> Pembelian (Masuk)
                 </a>
                 <a href="#" class="nav-link {{ request()->routeIs('pemakaian.*') ? 'active' : '' }}">
