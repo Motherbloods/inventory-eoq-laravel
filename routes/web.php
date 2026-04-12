@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EoqController;
 use App\Http\Controllers\KoreksiStokController;
 use App\Http\Controllers\PemakaianController;
 use App\Http\Controllers\PemasokController;
@@ -36,6 +37,8 @@ Route::middleware(['auth', 'active'])->group(function () {
 
         Route::resource('bahan-baku', BahanBakuController::class);
         Route::resource('pemasok', PemasokController::class);
+
+        Route::get('/eoq/hasil', [EoqController::class, 'hasil'])->name('eoq.hasil');
     });
 
     Route::middleware('role:admin')->group(function () {
@@ -47,6 +50,12 @@ Route::middleware(['auth', 'active'])->group(function () {
 
         Route::resource('koreksi-stok', KoreksiStokController::class)
             ->parameters(['koreksi-stok' => 'koreksiStok']);
+
+        Route::get('/eoq/setting', [EoqController::class, 'setting'])->name('eoq.setting');
+        Route::post('/eoq/setting', [EoqController::class, 'storeSetting'])->name('eoq.storeSetting');
+        Route::post('/eoq/hitung/{bahanBaku}', [EoqController::class, 'hitung'])->name('eoq.hitung');
+        Route::post('/eoq/hitung-semua', [EoqController::class, 'hitungSemua'])->name('eoq.hitungSemua');
+
 
         Route::put('/permintaan-bahan/{permintaan}/approve', [PermintaanBahanController::class, 'approve'])->name('permintaan-bahan.approve');
         Route::put('/permintaan-bahan/{permintaan}/tolak', [PermintaanBahanController::class, 'tolak'])->name('permintaan-bahan.tolak');

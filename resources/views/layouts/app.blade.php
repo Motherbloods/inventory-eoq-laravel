@@ -81,11 +81,13 @@
             @if (auth()->user()->isAdmin() || auth()->user()->isPemilik())
                 <div class="nav-section-label">EOQ</div>
                 @if (auth()->user()->isAdmin())
-                    <a href="#" class="nav-link {{ request()->routeIs('eoq.setting') ? 'active' : '' }}">
+                    <a href="{{ route('eoq.setting') }}"
+                        class="nav-link {{ request()->routeIs('eoq.setting') ? 'active' : '' }}">
                         <i class="bi bi-sliders"></i> Parameter EOQ
                     </a>
                 @endif
-                <a href="#" class="nav-link {{ request()->routeIs('eoq.hasil') ? 'active' : '' }}">
+                <a href="{{ route('eoq.hasil') }}"
+                    class="nav-link {{ request()->routeIs('eoq.hasil') ? 'active' : '' }}">
                     <i class="bi bi-calculator"></i> Hasil EOQ & ROP
                 </a>
 
