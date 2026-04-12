@@ -124,7 +124,7 @@
                 <span class="role-badge bg-warning text-dark">{{ ucfirst(auth()->user()->role) }}</span>
             </div>
             <div class="d-flex gap-2 mt-2">
-                <a href="#" class="btn btn-sm w-50"
+                <a href="{{ route('profile.edit') }}" class="btn btn-sm w-50"
                     style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);border:none;font-size:0.75rem">
                     <i class="bi bi-person-gear"></i> Profil
                 </a>

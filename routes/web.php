@@ -7,6 +7,7 @@ use App\Http\Controllers\KoreksiStokController;
 use App\Http\Controllers\PemakaianController;
 use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,10 @@ Route::middleware(['auth', 'active'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
     Route::middleware('role:admin,pemilik')->group(function () {
 
