@@ -7,6 +7,7 @@ use App\Http\Controllers\KoreksiStokController;
 use App\Http\Controllers\PemakaianController;
 use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PermintaanBahanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -46,9 +47,19 @@ Route::middleware(['auth', 'active'])->group(function () {
 
         Route::resource('koreksi-stok', KoreksiStokController::class)
             ->parameters(['koreksi-stok' => 'koreksiStok']);
+
+        Route::put('/permintaan-bahan/{permintaan}/approve', [PermintaanBahanController::class, 'approve'])->name('permintaan-bahan.approve');
+        Route::put('/permintaan-bahan/{permintaan}/tolak', [PermintaanBahanController::class, 'tolak'])->name('permintaan-bahan.tolak');
+
     });
 
     Route::middleware('role:admin,produksi')->group(function () {
+        Route::get('/permintaan-bahan', [PermintaanBahanController::class, 'index'])->name('permintaan-bahan.index');
+        Route::get('/permintaan-bahan/create', [PermintaanBahanController::class, 'create'])->name('permintaan-bahan.create');
+        Route::post('/permintaan-bahan', [PermintaanBahanController::class, 'store'])->name('permintaan-bahan.store');
+        Route::get('/permintaan-bahan/{permintaan}', [PermintaanBahanController::class, 'show'])->name('permintaan-bahan.show');
+
+
         Route::get('/stok-bahan', [BahanBakuController::class, 'stokProduksi'])->name('stok-bahan');
     });
 });

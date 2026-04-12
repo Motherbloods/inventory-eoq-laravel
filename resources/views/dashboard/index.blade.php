@@ -164,7 +164,8 @@
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <span class="card-title">Permintaan Bahan Pending</span>
-                        <a href="#" class="btn btn-sm btn-outline-warning">Lihat Semua</a>
+                        <a href="{{ route('permintaan-bahan.index') }}" class="btn btn-sm btn-outline-warning">Lihat
+                            Semua</a>
                     </div>
                     <div class="card-body p-0">
                         <table class="table mb-0">

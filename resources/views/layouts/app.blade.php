@@ -68,7 +68,8 @@
                     class="nav-link {{ request()->routeIs('stok-bahan') ? 'active' : '' }}">
                     <i class="bi bi-box2"></i> Ketersediaan Bahan
                 </a>
-                <a href="#" class="nav-link {{ request()->routeIs('permintaan-bahan.*') ? 'active' : '' }}">
+                <a href="{{ route('permintaan-bahan.index') }}"
+                    class="nav-link {{ request()->routeIs('permintaan-bahan.*') ? 'active' : '' }}">
                     <i class="bi bi-clipboard-check"></i> Permintaan Bahan
                     @php $pending = \App\Models\PermintaanBahan::where('status','pending')->count(); @endphp
                     @if ($pending > 0 && auth()->user()->isAdmin())
