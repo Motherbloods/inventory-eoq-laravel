@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\KoreksiStokController;
+use App\Http\Controllers\PemakaianController;
 use App\Http\Controllers\PemasokController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +37,10 @@ Route::middleware(['auth', 'active'])->group(function () {
 
         // Manajemen Pengguna
         Route::resource('users', UserController::class);
+        Route::resource('pembelian', PembelianController::class);
+        Route::resource('pemakaian', PemakaianController::class);
+
+        Route::resource('koreksi-stok', KoreksiStokController::class)
+            ->parameters(['koreksi-stok' => 'koreksiStok']);
     });
 });

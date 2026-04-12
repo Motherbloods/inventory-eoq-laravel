@@ -48,13 +48,16 @@
 
             @if (auth()->user()->isAdmin())
                 <div class="nav-section-label">Transaksi</div>
-                <a href="#" class="nav-link {{ request()->routeIs('pembelian.*') ? 'active' : '' }}">
+                <a href="{{ route('pembelian.index') }}"
+                    class="nav-link {{ request()->routeIs('pembelian.*') ? 'active' : '' }}">
                     <i class="bi bi-cart-plus"></i> Pembelian (Masuk)
                 </a>
-                <a href="#" class="nav-link {{ request()->routeIs('pemakaian.*') ? 'active' : '' }}">
+                <a href="{{ route('pemakaian.index') }}"
+                    class="nav-link {{ request()->routeIs('pemakaian.*') ? 'active' : '' }}">
                     <i class="bi bi-cart-dash"></i> Pemakaian (Keluar)
                 </a>
-                <a href="#" class="nav-link {{ request()->routeIs('koreksi-stok.*') ? 'active' : '' }}">
+                <a href="{{ route('koreksi-stok.index') }}"
+                    class="nav-link {{ request()->routeIs('koreksi-stok.*') ? 'active' : '' }}">
                     <i class="bi bi-arrow-left-right"></i> Koreksi Stok
                 </a>
             @endif

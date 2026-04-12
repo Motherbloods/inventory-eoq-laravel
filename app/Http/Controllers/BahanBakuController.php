@@ -125,6 +125,11 @@ class BahanBakuController extends Controller
             'jumlah' => abs($k->selisih),
         ]);
 
-        return $masuk->merge($keluar)->merge($koreksi)->sortByDesc('tanggal')->values();
+        return collect()
+            ->merge($masuk)
+            ->merge($keluar)
+            ->merge($koreksi)
+            ->sortByDesc('tanggal')
+            ->values();
     }
 }

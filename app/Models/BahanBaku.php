@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Validation\ValidationException;
 
 class BahanBaku extends Model
 {
@@ -42,7 +43,9 @@ class BahanBaku extends Model
     public function kurangiStok(float $jumlah): void
     {
         if ($this->stok_saat_ini < $jumlah) {
-            throw new \Exception("Stok {$this->nama_bahan} tidak mencukupi. Stok tersedia: {$this->stok_saat_ini} {$this->satuan}.");
+            throw ValidationException::withMessages([
+                'jumlah' => "Stok {$this->nama_bahan} tidak mencukupi. Stok tersedia: {$this->stok_saat_ini} {$this->satuan}."
+            ]);
         }
         $this->decrement('stok_saat_ini', $jumlah);
     }

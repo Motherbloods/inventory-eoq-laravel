@@ -14,10 +14,15 @@ class StoreBahanBakuRequest extends FormRequest
 
     public function rules(): array
     {
-        $id = $this->route('bahanBaku')?->id;
+        $bahan = $this->route('bahan_baku');
 
         return [
-            'kode_bahan' => ['required', 'string', 'max:20', Rule::unique('bahan_bakus', 'kode_bahan')->ignore($id)],
+            'kode_bahan' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('bahan_bakus', 'kode_bahan')->ignore($bahan?->id),
+            ],
             'nama_bahan' => ['required', 'string', 'max:100'],
             'kategori' => ['required', 'string', 'max:50'],
             'satuan' => ['required', 'string', 'max:20'],
