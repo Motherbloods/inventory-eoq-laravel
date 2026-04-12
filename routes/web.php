@@ -42,4 +42,8 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::resource('koreksi-stok', KoreksiStokController::class)
             ->parameters(['koreksi-stok' => 'koreksiStok']);
     });
+
+    Route::middleware('role:admin,produksi')->group(function () {
+        Route::get('/stok-bahan', [BahanBakuController::class, 'stokProduksi'])->name('stok-bahan');
+    });
 });
