@@ -30,7 +30,7 @@
 
         <div class="sidebar-nav">
 
-            <a href="#" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <i class="bi bi-speedometer2"></i> Dashboard
             </a>
 
@@ -62,14 +62,12 @@
                 </a>
             @endif
 
-            @if (auth()->user()->isProduksi())
+            @if (auth()->user()->isAdmin() || auth()->user()->isProduksi())
                 <div class="nav-section-label">Stok & Permintaan</div>
-                <a href="#" class="nav-link {{ request()->routeIs('stok-bahan') ? 'active' : '' }}">
+                <a href="{{ route('stok-bahan') }}"
+                    class="nav-link {{ request()->routeIs('stok-bahan') ? 'active' : '' }}">
                     <i class="bi bi-box2"></i> Ketersediaan Bahan
                 </a>
-            @endif
-
-            @if (auth()->user()->isAdmin() || auth()->user()->isProduksi())
                 <a href="#" class="nav-link {{ request()->routeIs('permintaan-bahan.*') ? 'active' : '' }}">
                     <i class="bi bi-clipboard-check"></i> Permintaan Bahan
                     @php $pending = \App\Models\PermintaanBahan::where('status','pending')->count(); @endphp

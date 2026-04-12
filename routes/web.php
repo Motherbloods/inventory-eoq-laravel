@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KoreksiStokController;
 use App\Http\Controllers\PemakaianController;
 use App\Http\Controllers\PemasokController;
@@ -23,9 +24,7 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::get('/', fn() => redirect()->route('dashboard'));
 
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard.index');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware('role:admin,pemilik')->group(function () {
 
@@ -42,5 +41,9 @@ Route::middleware(['auth', 'active'])->group(function () {
 
         Route::resource('koreksi-stok', KoreksiStokController::class)
             ->parameters(['koreksi-stok' => 'koreksiStok']);
+    });
+
+    Route::middleware('role:admin,produksi')->group(function () {
+        Route::get('/stok-bahan', [BahanBakuController::class, 'stokProduksi'])->name('stok-bahan');
     });
 });
