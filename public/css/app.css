@@ -14,7 +14,7 @@ body {
 /* ── Sidebar ── */
 #sidebar {
     width: var(--sidebar-width);
-    min-height: 100vh;
+    height: 100vh;
     background: var(--sidebar-bg);
     position: fixed;
     top: 0;
@@ -23,6 +23,7 @@ body {
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .sidebar-brand {

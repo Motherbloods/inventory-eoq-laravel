@@ -36,10 +36,12 @@
 
             @if (auth()->user()->isAdmin() || auth()->user()->isPemilik())
                 <div class="nav-section-label">Data Master</div>
-                <a href="#" class="nav-link {{ request()->routeIs('bahan-baku.*') ? 'active' : '' }}">
-                    <i class="bi bi-box2"></i> Bahan Baku
+                <a href="{{ route('bahan-baku.index') }}"
+                    class="nav-link {{ request()->routeIs('bahan-baku.*') ? 'active' : '' }}"> <i
+                        class="bi bi-box2"></i> Bahan Baku
                 </a>
-                <a href="#" class="nav-link {{ request()->routeIs('pemasok.*') ? 'active' : '' }}">
+                <a href="{{ route('pemasok.index') }}"
+                    class="nav-link {{ request()->routeIs('pemasok.*') ? 'active' : '' }}">
                     <i class="bi bi-truck"></i> Pemasok
                 </a>
             @endif
@@ -102,8 +104,9 @@
 
             @if (auth()->user()->isAdmin())
                 <div class="nav-section-label">Administrasi</div>
-                <a href="#" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                    <i class="bi bi-people"></i> Manajemen Pengguna
+                <a href="{{ route('users.index') }}"
+                    class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"> <i class="bi bi-people"></i>
+                    Manajemen Pengguna
                 </a>
             @endif
 
