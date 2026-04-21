@@ -83,7 +83,7 @@
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <span class="card-title"><i class="bi bi-calculator me-1"></i>Perlu Dipesan (EOQ)</span>
-                    <a href="#" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                    <a href="{{ route('eoq.hasil') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
                 </div>
                 <div class="card-body p-0">
                     @forelse($rekomendasiEoq as $eoq)

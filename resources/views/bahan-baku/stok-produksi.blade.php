@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <span class="card-title me-auto">Stok Bahan Baku</span>
-            <a href="#" class="btn btn-sm btn-primary text-white">
+            <a href="{{ route('permintaan-bahan.create') }}" class="btn btn-sm btn-primary text-white">
                 <i class="bi bi-plus-lg me-1"></i>Ajukan Permintaan
             </a>
         </div>
