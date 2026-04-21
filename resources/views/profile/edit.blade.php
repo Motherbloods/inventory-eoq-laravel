@@ -11,17 +11,20 @@
                 <div class="card-header"><span class="card-title">Informasi Profil</span></div>
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-3 mb-4 p-3 rounded" style="background:#f4f6f9">
-                        <div
-                            style="width:56px;height:56px;background:#e65c1e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;font-weight:700;flex-shrink:0">
-                            {{ strtoupper(substr($user->name, 0, 1)) }}
-                        </div>
-                        <div>
-                            <div class="fw-bold">{{ $user->name }}</div>
-                            <div class="text-muted small">{{ $user->email }}</div>
-                            <span
-                                class="badge {{ $user->role === 'pemilik' ? 'bg-warning text-dark' : ($user->role === 'admin' ? 'bg-primary' : 'bg-info text-dark') }} mt-1">
-                                {{ ucfirst($user->role) }}
-                            </span>
+                        <div class="d-flex align-items-center gap-3">
+                            <div
+                                style="width:56px;height:56px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                                <img src="{{ asset('user.png') }}" alt="User"
+                                    style="width:100%;height:100%;object-fit:cover">
+                            </div>
+                            <div>
+                                <div class="fw-bold">{{ $user->name }}</div>
+                                <div class="text-muted small">{{ $user->email }}</div>
+                                <span
+                                    class="badge {{ $user->role === 'pemilik' ? 'bg-warning text-dark' : ($user->role === 'admin' ? 'bg-primary' : 'bg-info text-dark') }} mt-1">
+                                    {{ ucfirst($user->role) }}
+                                </span>
+                            </div>
                         </div>
                     </div>
 

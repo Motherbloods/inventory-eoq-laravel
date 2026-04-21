@@ -183,7 +183,7 @@
                     <div class="d-flex align-items-center gap-2 px-2 py-1 rounded" style="background:#f4f6f9">
 
                         <div
-                            style="width:28px;height:28px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#e65c1e">
+                            style="width:28px;height:28px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;">
 
                             <img src="{{ asset('user.png') }}" alt="User"
                                 style="width:100%;height:100%;object-fit:cover">
