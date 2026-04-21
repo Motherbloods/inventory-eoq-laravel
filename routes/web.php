@@ -5,6 +5,7 @@ use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EoqController;
 use App\Http\Controllers\KoreksiStokController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PemakaianController;
 use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PembelianController;
@@ -39,6 +40,14 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::resource('pemasok', PemasokController::class);
 
         Route::get('/eoq/hasil', [EoqController::class, 'hasil'])->name('eoq.hasil');
+
+        Route::prefix('laporan')->name('laporan.')->group(function () {
+            Route::get('/stok-akhir', [LaporanController::class, 'stokAkhir'])->name('stok-akhir');
+            Route::get('/bahan-masuk', [LaporanController::class, 'bahanMasuk'])->name('bahan-masuk');
+            Route::get('/bahan-keluar', [LaporanController::class, 'bahanKeluar'])->name('bahan-keluar');
+            Route::get('/reorder', [LaporanController::class, 'reorder'])->name('reorder');
+            Route::get('/export/{type}', [LaporanController::class, 'export'])->name('export');
+        });
     });
 
     Route::middleware('role:admin')->group(function () {
