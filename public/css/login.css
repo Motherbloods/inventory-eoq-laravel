@@ -6,7 +6,7 @@
 
 body {
     font-family: "Inter", system-ui, sans-serif;
-    background: #e65c1e;
+    background: #c94e15;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -26,7 +26,7 @@ body {
 /* Panel kiri */
 .panel-left {
     flex: 1;
-    background: #e65c1e;
+    background: #c94e15;
     padding: 48px 44px;
     display: flex;
     flex-direction: column;
@@ -227,7 +227,7 @@ body {
 }
 
 .field-input:focus {
-    border-color: #e65c1e;
+    border-color: #c94e15;
     background: #fff;
     box-shadow: 0 0 0 3px rgba(230, 92, 30, 0.1);
 }
@@ -282,7 +282,7 @@ body {
 .remember-row input[type="checkbox"] {
     width: 15px;
     height: 15px;
-    accent-color: #e65c1e;
+    accent-color: #c94e15;
     cursor: pointer;
 }
 

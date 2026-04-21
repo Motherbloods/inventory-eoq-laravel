@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — Inventory Toko Roti Andika</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -19,7 +21,9 @@
             <div class="deco-dot"></div>
 
             <div class="brand">
-                <div class="brand-icon"><i class="bi bi-box-seam"></i></div>
+                <img src="{{ asset('logo_login.png') }}" alt="Logo"
+                    style="width: 32px; height: 32px; object-fit: contain;">
+
                 <div>
                     <div class="brand-name">Toko Roti Andika</div>
                     <div class="brand-sub">Sistem Informasi Manajemen Inventory</div>
