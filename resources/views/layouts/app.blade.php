@@ -92,16 +92,20 @@
                 </a>
 
                 <div class="nav-section-label">Laporan</div>
-                <a href="#" class="nav-link {{ request()->routeIs('laporan.stok-akhir') ? 'active' : '' }}">
+                <a href="{{ route('laporan.stok-akhir') }}"
+                    class="nav-link {{ request()->routeIs('laporan.stok-akhir') ? 'active' : '' }}">
                     <i class="bi bi-archive"></i> Stok Akhir
                 </a>
-                <a href="#" class="nav-link {{ request()->routeIs('laporan.bahan-masuk') ? 'active' : '' }}">
+                <a href="{{ route('laporan.bahan-masuk') }}"
+                    class="nav-link {{ request()->routeIs('laporan.bahan-masuk') ? 'active' : '' }}">
                     <i class="bi bi-arrow-down-circle"></i> Bahan Masuk
                 </a>
-                <a href="#" class="nav-link {{ request()->routeIs('laporan.bahan-keluar') ? 'active' : '' }}">
+                <a href="{{ route('laporan.bahan-keluar') }}"
+                    class="nav-link {{ request()->routeIs('laporan.bahan-keluar') ? 'active' : '' }}">
                     <i class="bi bi-arrow-up-circle"></i> Bahan Keluar
                 </a>
-                <a href="#" class="nav-link {{ request()->routeIs('laporan.reorder') ? 'active' : '' }}">
+                <a href="{{ route('laporan.reorder') }}"
+                    class="nav-link {{ request()->routeIs('laporan.reorder') ? 'active' : '' }}">
                     <i class="bi bi-exclamation-triangle"></i> Perlu Dipesan
                 </a>
             @endif
@@ -163,7 +167,7 @@
                         <span class="notif-dot"></span>
                     </a>
                 @endif
-                <a href="#" class="text-decoration-none" style="color:inherit">
+                <a href="{{ route('profile.edit') }}" class="text-decoration-none" style="color:inherit">
                     <div class="d-flex align-items-center gap-2 px-2 py-1 rounded" style="background:#f4f6f9">
                         <div
                             style="width:28px;height:28px;background:#e65c1e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;font-weight:600">

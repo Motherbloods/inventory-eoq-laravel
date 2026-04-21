@@ -54,7 +54,7 @@
                     </select>
                     <button class="btn btn-sm btn-outline-secondary">Cari</button>
                 </form>
-                <a href="#" class="btn btn-sm btn-outline-warning">
+                <a href="{{ route('laporan.reorder') }}" class="btn btn-sm btn-outline-warning">
                     <i class="bi bi-file-earmark-text me-1"></i>Laporan Reorder
                 </a>
             </div>
