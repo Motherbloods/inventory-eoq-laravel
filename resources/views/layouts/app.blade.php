@@ -124,13 +124,23 @@
 
         <div class="sidebar-footer">
             <div class="sidebar-user">
-                <div class="avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+                <div
+                    style="overflow:hidden;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;">
+                    <img src="{{ asset('user.png') }}" alt="User" style="width:100%;height:100%;object-fit:cover">
+                </div>
+
                 <div style="min-width:0">
                     <div style="color:#fff;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-                        {{ auth()->user()->name }}</div>
-                    <div style="color:rgba(255,255,255,0.4);font-size:0.7rem">{{ auth()->user()->email }}</div>
+                        {{ auth()->user()->name }}
+                    </div>
+                    <div style="color:rgba(255,255,255,0.4);font-size:0.7rem">
+                        {{ auth()->user()->email }}
+                    </div>
                 </div>
-                <span class="role-badge bg-warning text-dark">{{ ucfirst(auth()->user()->role) }}</span>
+
+                <span class="role-badge bg-warning text-dark">
+                    {{ ucfirst(auth()->user()->role) }}
+                </span>
             </div>
             <div class="d-flex gap-2 mt-2">
                 <a href="{{ route('profile.edit') }}" class="btn btn-sm w-50"
@@ -171,11 +181,17 @@
                 @endif
                 <a href="{{ route('profile.edit') }}" class="text-decoration-none" style="color:inherit">
                     <div class="d-flex align-items-center gap-2 px-2 py-1 rounded" style="background:#f4f6f9">
+
                         <div
-                            style="width:28px;height:28px;background:#e65c1e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;font-weight:600">
-                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            style="width:28px;height:28px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#e65c1e">
+
+                            <img src="{{ asset('user.png') }}" alt="User"
+                                style="width:100%;height:100%;object-fit:cover">
                         </div>
-                        <span style="font-size:0.8rem;font-weight:500;color:#1e2a3a">{{ auth()->user()->name }}</span>
+
+                        <span style="font-size:0.8rem;font-weight:500;color:#1e2a3a">
+                            {{ auth()->user()->name }}
+                        </span>
                     </div>
                 </a>
             </div>

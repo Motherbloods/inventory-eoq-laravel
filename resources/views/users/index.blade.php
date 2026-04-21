@@ -49,8 +49,9 @@
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div
-                                        style="width:32px;height:32px;background:#e65c1e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.75rem;font-weight:600;flex-shrink:0">
-                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                        style="width:32px;height:32px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                                        <img src="{{ asset('user.png') }}" alt="User"
+                                            style="width:100%;height:100%;object-fit:cover">
                                     </div>
                                     <span class="fw-semibold small">{{ $user->name }}</span>
                                     @if ($user->id === auth()->id())
