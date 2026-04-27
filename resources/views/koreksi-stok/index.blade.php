@@ -48,7 +48,7 @@
             </table>
         </div>
         @if ($koreksis->hasPages())
-            <div class="card-body pt-2">{{ $koreksis->links() }}</div>
+            <div class="card-body pt-2">{{ $koreksis->links('pagination::bootstrap-5') }}</div>
         @endif
     </div>
 @endsection

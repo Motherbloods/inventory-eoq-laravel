@@ -19,7 +19,8 @@
                     <select name="status" class="form-select form-select-sm">
                         <option value="">Semua Status</option>
                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="disetujui" {{ request('status') == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
+                        <option value="disetujui" {{ request('status') == 'disetujui' ? 'selected' : '' }}>Disetujui
+                        </option>
                         <option value="ditolak" {{ request('status') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
                     </select>
                 </div>
@@ -71,7 +72,7 @@
             </table>
         </div>
         @if ($permintaans->hasPages())
-            <div class="card-body pt-2">{{ $permintaans->links() }}</div>
+            <div class="card-body pt-2">{{ $permintaans->links('pagination::bootstrap-5') }}</div>
         @endif
     </div>
 @endsection

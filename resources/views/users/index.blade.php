@@ -96,7 +96,7 @@
             </table>
         </div>
         @if ($users->hasPages())
-            <div class="card-body pt-2">{{ $users->links() }}</div>
+            <div class="card-body pt-2">{{ $users->links('pagination::bootstrap-5') }}</div>
         @endif
     </div>
 @endsection

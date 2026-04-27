@@ -80,7 +80,7 @@
             </table>
         </div>
         @if ($pembelians->hasPages())
-            <div class="card-body pt-2">{{ $pembelians->links() }}</div>
+            <div class="card-body pt-2">{{ $pembelians->links('pagination::bootstrap-5') }}</div>
         @endif
     </div>
 @endsection

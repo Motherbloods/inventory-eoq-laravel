@@ -65,7 +65,7 @@
             </table>
         </div>
         @if ($pemakaians->hasPages())
-            <div class="card-body pt-2">{{ $pemakaians->links() }}</div>
+            <div class="card-body pt-2">{{ $pemakaians->links('pagination::bootstrap-5') }}</div>
         @endif
     </div>
 @endsection

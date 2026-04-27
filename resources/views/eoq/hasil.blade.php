@@ -118,7 +118,7 @@
             </div>
         </div>
         @if ($eoqResults->hasPages())
-            <div class="card-body pt-2">{{ $eoqResults->links() }}</div>
+            <div class="card-body pt-2">{{ $eoqResults->links('pagination::bootstrap-5') }}</div>
         @endif
     </div>
 @endsection

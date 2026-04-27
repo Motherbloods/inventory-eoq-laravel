@@ -109,7 +109,7 @@
             </table>
         </div>
         @if ($bahanBakus->hasPages())
-            <div class="card-body pt-2">{{ $bahanBakus->links() }}</div>
+            <div class="card-body pt-2">{{ $bahanBakus->links('pagination::bootstrap-5') }}</div>
         @endif
     </div>
 

@@ -27,7 +27,9 @@ class BahanBakuController extends Controller
             $query->whereColumn('stok_saat_ini', '<=', 'stok_minimum');
         }
 
-        $bahanBakus = $query->orderBy('nama_bahan')->paginate(15)->withQueryString();
+        $bahanBakus = $query->orderBy('created_at', 'desc')
+            ->paginate(15)
+            ->withQueryString();
         $kategoris = BahanBaku::select('kategori')->distinct()->orderBy('kategori')->pluck('kategori');
         $totalKritis = BahanBaku::whereColumn('stok_saat_ini', '<=', 'stok_minimum')->count();
 
