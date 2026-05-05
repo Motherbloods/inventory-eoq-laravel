@@ -126,19 +126,19 @@ class LaporanController extends Controller
         abort_unless(in_array($format, ['pdf', 'excel']), 404);
 
         $data = match ($type) {
-            'stok-akhir' => ['bahanBakus' => BahanBaku::orderBy('nama_bahan')->get()],
+            'stok-akhir' => $this->dataStokAkhir($request),
             'bahan-masuk' => $this->dataBahanMasuk($request),
             'bahan-keluar' => $this->dataBahanKeluar($request),
-            'reorder' => [
-                'bahanMinimum' => BahanBaku::whereColumn('stok_saat_ini', '<=', 'stok_minimum')->get(),
-                'bahanReorderEoq' => EoqSetting::with('bahanBaku')->whereNotNull('reorder_point')
-                    ->whereHas('bahanBaku', fn($q) => $q->whereColumn('stok_saat_ini', '<=', 'eoq_settings.reorder_point'))
-                    ->get(),
-            ],
+            'reorder' => $this->dataReorder($request),
         };
 
         $view = "laporan.export.{$type}";
-        $title = "Laporan " . ucwords(str_replace('-', ' ', $type));
+        $title = match ($type) {
+            'stok-akhir' => 'Laporan Stok Akhir',
+            'bahan-masuk' => 'Laporan Bahan Masuk',
+            'bahan-keluar' => 'Laporan Bahan Keluar',
+            'reorder' => 'Laporan Reorder',
+        };
 
         if ($format === 'pdf') {
             // Return view untuk window.print()
@@ -159,6 +159,18 @@ class LaporanController extends Controller
             ->join('pembelian_bahan_bakus', 'pembelian_details.pembelian_id', '=', 'pembelian_bahan_bakus.id')
             ->whereBetween(\DB::raw('DATE(pembelian_bahan_bakus.tanggal_pembelian)'), [$filter['dari'], $filter['sampai']]);
 
+        if (!empty($filter['bahan_id'])) {
+            $query->where('pembelian_details.bahan_baku_id', $filter['bahan_id']);
+        }
+
+        if (!empty($filter['pemasok_id'])) {
+            $query->where('pembelian_bahan_bakus.pemasok_id', $filter['pemasok_id']);
+        }
+
+        if (!empty($filter['kategori'])) {
+            $query->whereHas('bahanBaku', fn($q) => $q->where('kategori', $filter['kategori']));
+        }
+
         return ['details' => $query->orderBy('pembelian_bahan_bakus.tanggal_pembelian')->get(), 'filter' => $filter];
     }
 
@@ -169,6 +181,45 @@ class LaporanController extends Controller
             ->join('pemakaian_bahan_bakus', 'pemakaian_details.pemakaian_id', '=', 'pemakaian_bahan_bakus.id')
             ->whereBetween(\DB::raw('DATE(pemakaian_bahan_bakus.tanggal_pemakaian)'), [$filter['dari'], $filter['sampai']]);
 
+        if (!empty($filter['bahan_id'])) {
+            $query->where('pemakaian_details.bahan_baku_id', $filter['bahan_id']);
+        }
+
+        if (!empty($filter['kategori'])) {
+            $query->whereHas('bahanBaku', fn($q) => $q->where('kategori', $filter['kategori']));
+        }
+
         return ['details' => $query->orderBy('pemakaian_bahan_bakus.tanggal_pemakaian')->get(), 'filter' => $filter];
+    }
+
+    private function dataStokAkhir(Request $request): array
+    {
+        $query = BahanBaku::query();
+
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        if ($request->filled('search')) {
+            $query->where('nama_bahan', 'like', '%' . $request->search . '%');
+        }
+
+        return [
+            'bahanBakus' => $query->orderBy('nama_bahan')->get(),
+            'kategoris' => BahanBaku::select('kategori')->distinct()->pluck('kategori'),
+        ];
+    }
+
+    private function dataReorder(Request $request): array
+    {
+        return [
+            'bahanMinimum' => BahanBaku::whereColumn('stok_saat_ini', '<=', 'stok_minimum')->get(),
+            'bahanReorderEoq' => EoqSetting::with('bahanBaku')
+                ->whereNotNull('reorder_point')
+                ->whereHas('bahanBaku', function ($q) {
+                    $q->whereColumn('stok_saat_ini', '<=', 'eoq_settings.reorder_point');
+                })
+                ->get(),
+        ];
     }
 }
