@@ -7,9 +7,9 @@
     <div class="card">
         <div class="card-header d-flex flex-wrap align-items-center gap-2">
             <span class="card-title me-auto">Bahan Keluar (Pemakaian)</span>
-            <a href="{{ route('laporan.export', ['type' => 'bahan-keluar', 'format' => 'pdf', 'dari' => $filter['dari'], 'sampai' => $filter['sampai']]) }}"
+            <a href="{{ route('laporan.export', ['type' => 'bahan-keluar', 'format' => 'pdf', 'dari' => $filter['dari'], 'sampai' => $filter['sampai'], 'bahan_id' => $filter['bahan_id'], 'kategori' => $filter['kategori']]) }}"
                 class="btn btn-sm btn-outline-danger"><i class="bi bi-file-pdf me-1"></i>PDF</a>
-            <a href="{{ route('laporan.export', ['type' => 'bahan-keluar', 'format' => 'excel', 'dari' => $filter['dari'], 'sampai' => $filter['sampai']]) }}"
+            <a href="{{ route('laporan.export', ['type' => 'bahan-keluar', 'format' => 'excel', 'dari' => $filter['dari'], 'sampai' => $filter['sampai'], 'bahan_id' => $filter['bahan_id'], 'kategori' => $filter['kategori']]) }}"
                 class="btn btn-sm btn-outline-success"><i class="bi bi-file-excel me-1"></i>Excel</a>
         </div>
         <div class="card-body border-bottom pb-3">
@@ -63,7 +63,8 @@
                             <td class="small fw-semibold">{{ $d->bahanBaku->nama_bahan }}</td>
                             <td><span class="badge bg-light text-dark border"
                                     style="font-size:0.7rem">{{ $d->bahanBaku->kategori }}</span></td>
-                            <td class="text-end small fw-semibold text-danger">-{{ number_format($d->jumlah, 2, ',', '.') }}
+                            <td class="text-end small fw-semibold text-danger">
+                                -{{ number_format($d->jumlah, 2, ',', '.') }}
                                 {{ $d->bahanBaku->satuan }}</td>
                             <td class="small text-muted">{{ $d->pemakaian->keterangan ?? '-' }}</td>
                         </tr>
@@ -77,7 +78,8 @@
                     <tfoot>
                         <tr class="table-light">
                             <td colspan="5" class="text-end fw-bold">Total Keluar</td>
-                            <td class="text-end fw-bold text-danger">{{ number_format($details->sum('jumlah'), 2, ',', '.') }}
+                            <td class="text-end fw-bold text-danger">
+                                {{ number_format($details->sum('jumlah'), 2, ',', '.') }}
                             </td>
                             <td></td>
                         </tr>

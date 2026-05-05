@@ -7,9 +7,9 @@
     <div class="card">
         <div class="card-header d-flex flex-wrap align-items-center gap-2">
             <span class="card-title me-auto">Bahan Masuk (Pembelian)</span>
-            <a href="{{ route('laporan.export', ['type' => 'bahan-masuk', 'format' => 'pdf', 'dari' => $filter['dari'], 'sampai' => $filter['sampai']]) }}"
+            <a href="{{ route('laporan.export', ['type' => 'bahan-masuk', 'format' => 'pdf', 'dari' => $filter['dari'], 'sampai' => $filter['sampai'], 'bahan_id' => $filter['bahan_id'], 'kategori' => $filter['kategori'], 'pemasok_id' => $filter['pemasok_id']]) }}"
                 class="btn btn-sm btn-outline-danger"><i class="bi bi-file-pdf me-1"></i>PDF</a>
-            <a href="{{ route('laporan.export', ['type' => 'bahan-masuk', 'format' => 'excel', 'dari' => $filter['dari'], 'sampai' => $filter['sampai']]) }}"
+            <a href="{{ route('laporan.export', ['type' => 'bahan-masuk', 'format' => 'excel', 'dari' => $filter['dari'], 'sampai' => $filter['sampai'], 'bahan_id' => $filter['bahan_id'], 'kategori' => $filter['kategori'], 'pemasok_id' => $filter['pemasok_id']]) }}"
                 class="btn btn-sm btn-outline-success"><i class="bi bi-file-excel me-1"></i>Excel</a>
         </div>
         <div class="card-body border-bottom pb-3">
@@ -72,7 +72,8 @@
                             <td class="small fw-semibold">{{ $d->pembelian->nomor_transaksi }}</td>
                             <td class="small fw-semibold">{{ $d->bahanBaku->nama_bahan }}</td>
                             <td class="small">{{ $d->pembelian->pemasok->nama_pemasok }}</td>
-                            <td class="text-end small fw-semibold text-success">+{{ number_format($d->jumlah, 2, ',', '.') }}
+                            <td class="text-end small fw-semibold text-success">
+                                +{{ number_format($d->jumlah, 2, ',', '.') }}
                                 {{ $d->bahanBaku->satuan }}</td>
                             <td class="text-end small">Rp {{ number_format($d->harga_satuan, 0, ',', '.') }}</td>
                             <td class="text-end small fw-semibold">Rp {{ number_format($d->subtotal, 0, ',', '.') }}</td>

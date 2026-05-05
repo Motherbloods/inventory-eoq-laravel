@@ -7,11 +7,11 @@
     <div class="card">
         <div class="card-header d-flex flex-wrap align-items-center gap-2">
             <span class="card-title me-auto">Stok Akhir Bahan Baku</span>
-            <a href="{{ route('laporan.export', ['type' => 'stok-akhir', 'format' => 'pdf']) }}"
+            <a href="{{ route('laporan.export', ['type' => 'stok-akhir', 'format' => 'pdf', 'kategori' => request('kategori'), 'search' => request('search')]) }}"
                 class="btn btn-sm btn-outline-danger">
                 <i class="bi bi-file-pdf me-1"></i>Export PDF
             </a>
-            <a href="{{ route('laporan.export', ['type' => 'stok-akhir', 'format' => 'excel']) }}"
+            <a href="{{ route('laporan.export', ['type' => 'stok-akhir', 'format' => 'excel', 'kategori' => request('kategori'), 'search' => request('search')]) }}"
                 class="btn btn-sm btn-outline-success">
                 <i class="bi bi-file-excel me-1"></i>Export Excel
             </a>
