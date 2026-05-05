@@ -74,7 +74,9 @@
                     <span class="card-title">Aktivitas Stok 6 Bulan Terakhir</span>
                 </div>
                 <div class="card-body">
-                    <canvas id="chartAktivitas" height="200"></canvas>
+                    <div style="position:relative; height:220px; width:100%">
+                        <canvas id="chartAktivitas"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,7 +144,7 @@
                                             <div class="text-muted" style="font-size:0.75rem">
                                                 {{ $p->tanggal_pembelian->format('d M Y') }}</div>
                                         </td>
-                                        <td class="small">{{ $p->pemasok->nama_pemasok }}</td>
+                                        <td class="small">{{ $p->pemasok?->nama_pemasok ?? '— Pembelian Langsung' }}</td>
                                         <td class="small fw-semibold">Rp {{ number_format($p->total_harga, 0, ',', '.') }}
                                         </td>
                                     </tr>
@@ -164,8 +166,8 @@
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <span class="card-title">Permintaan Bahan Pending</span>
-                        <a href="{{ route('permintaan-bahan.index') }}" class="btn btn-sm btn-outline-warning">Lihat
-                            Semua</a>
+                        <a href="{{ route('permintaan-bahan.index', ['status' => 'pending']) }}"
+                            class="btn btn-sm btn-outline-warning">Lihat Semua</a>
                     </div>
                     <div class="card-body p-0">
                         <table class="table mb-0">
@@ -262,6 +264,7 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false, // FIX: false agar chart ikut tinggi wrapper, bukan rasio bawaan
                 plugins: {
                     legend: {
                         position: 'bottom'
