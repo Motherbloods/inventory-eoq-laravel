@@ -9,11 +9,24 @@ use Illuminate\Contracts\View\View;
 
 class LaporanExport implements FromView, WithTitle, ShouldAutoSize
 {
+    private string $safeTitle;
+
     public function __construct(
         private string $viewName,
         private array $data,
-        private string $title = 'Laporan'
+        string $title = 'Laporan'
     ) {
+        $this->safeTitle = mb_substr($title, 0, 31);
+
+        // Optional: Log untuk debugging (bisa dihapus setelah fix berhasil)
+        if (mb_strlen($title) > 31) {
+            \Log::warning('Excel sheet title truncated', [
+                'original' => $title,
+                'original_length' => mb_strlen($title),
+                'truncated' => $this->safeTitle,
+                'truncated_length' => mb_strlen($this->safeTitle),
+            ]);
+        }
     }
 
     public function view(): View
@@ -23,6 +36,7 @@ class LaporanExport implements FromView, WithTitle, ShouldAutoSize
 
     public function title(): string
     {
-        return $this->title;
+        // Return title yang sudah divalidasi di constructor
+        return $this->safeTitle;
     }
 }
