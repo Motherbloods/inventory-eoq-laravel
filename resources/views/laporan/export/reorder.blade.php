@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Reorder Point - {{ now()->format('d-m-Y') }}</title>
+    <title>Laporan Reorder</title>
     <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <style>
         * {

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Bahan Keluar - {{ now()->format('d-m-Y') }}</title>
+    <title>Laporan Bahan Keluar</title>
     <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <style>
         * {
