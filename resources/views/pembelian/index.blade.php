@@ -20,6 +20,8 @@
                 <div class="col-sm-3">
                     <select name="pemasok_id" class="form-select form-select-sm">
                         <option value="">Semua Pemasok</option>
+                        <option value="langsung" {{ request('pemasok_id') == 'langsung' ? 'selected' : '' }}>— Pembelian
+                            Langsung</option>
                         @foreach ($pemasoks as $p)
                             <option value="{{ $p->id }}" {{ request('pemasok_id') == $p->id ? 'selected' : '' }}>
                                 {{ $p->nama_pemasok }}</option>
@@ -53,7 +55,13 @@
                         <tr>
                             <td><span class="fw-semibold small">{{ $p->nomor_transaksi }}</span></td>
                             <td class="small text-muted">{{ $p->tanggal_pembelian->format('d M Y') }}</td>
-                            <td class="small">{{ $p->pemasok->nama_pemasok }}</td>
+                            <td class="small">
+                                @if ($p->pemasok)
+                                    {{ $p->pemasok->nama_pemasok }}
+                                @else
+                                    <span class="text-muted fst-italic">— Langsung / Pasar</span>
+                                @endif
+                            </td>
                             <td class="text-end fw-semibold small">Rp {{ number_format($p->total_harga, 0, ',', '.') }}
                             </td>
                             <td class="small text-muted">{{ $p->user->name }}</td>

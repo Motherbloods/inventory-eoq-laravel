@@ -15,8 +15,9 @@ return new class extends Migration {
             $table->string('nomor_transaksi', 30)->unique();
             $table->date('tanggal_pembelian');
             $table->foreignId('pemasok_id')
+                ->nullable()
                 ->constrained('pemasoks')
-                ->restrictOnDelete();
+                ->nullOnDelete();
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->restrictOnDelete();

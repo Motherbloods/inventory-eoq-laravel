@@ -21,7 +21,11 @@ class PembelianController extends Controller
         }
 
         if ($request->filled('pemasok_id')) {
-            $query->where('pemasok_id', $request->pemasok_id);
+            if ($request->pemasok_id === 'langsung') {
+                $query->whereNull('pemasok_id');
+            } else {
+                $query->where('pemasok_id', $request->pemasok_id);
+            }
         }
 
         if ($request->filled('dari') && $request->filled('sampai')) {
@@ -52,7 +56,7 @@ class PembelianController extends Controller
             $pembelian = PembelianBahanBaku::create([
                 'nomor_transaksi' => PembelianBahanBaku::generateNomor(),
                 'tanggal_pembelian' => $request->tanggal_pembelian,
-                'pemasok_id' => $request->pemasok_id,
+                'pemasok_id' => $request->pemasok_id ?: null,
                 'user_id' => auth()->id(),
                 'total_harga' => $totalHarga,
                 'keterangan' => $request->keterangan,
@@ -106,7 +110,7 @@ class PembelianController extends Controller
 
             $pembelian->update([
                 'tanggal_pembelian' => $request->tanggal_pembelian,
-                'pemasok_id' => $request->pemasok_id,
+                'pemasok_id' => $request->pemasok_id ?: null,
                 'total_harga' => $totalHarga,
                 'keterangan' => $request->keterangan,
             ]);

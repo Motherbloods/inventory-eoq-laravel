@@ -12,15 +12,19 @@
                     <div class="card-header"><span class="card-title">Informasi Pembelian</span></div>
                     <div class="card-body row g-3">
                         <div class="col-md-4">
-                            <label class="form-label">Pemasok <span class="text-danger">*</span></label>
-                            <select name="pemasok_id" class="form-select @error('pemasok_id') is-invalid @enderror"
-                                required>
+                            <label class="form-label">Pemasok <span
+                                    class="text-muted fw-normal small">(opsional)</span></label>
+                            <select name="pemasok_id" class="form-select @error('pemasok_id') is-invalid @enderror">
+                                <option value="">— Tanpa Pemasok / Beli di Pasar</option>
                                 @foreach ($pemasoks as $p)
                                     <option value="{{ $p->id }}"
                                         {{ old('pemasok_id', $pembelian->pemasok_id) == $p->id ? 'selected' : '' }}>
                                         {{ $p->nama_pemasok }}</option>
                                 @endforeach
                             </select>
+                            @error('pemasok_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Tanggal <span class="text-danger">*</span></label>

@@ -12,7 +12,7 @@ class PembelianBahanBaku extends Model
     protected $fillable = [
         'nomor_transaksi',
         'tanggal_pembelian',
-        'pemasok_id',
+        'pemasok_id',       // FIX: nullable, boleh null jika beli di pasar
         'user_id',
         'total_harga',
         'keterangan',
@@ -34,6 +34,10 @@ class PembelianBahanBaku extends Model
             ->value('nomor_transaksi');
         $urutan = $last ? (int) substr($last, -3) + 1 : 1;
         return $prefix . '-' . str_pad($urutan, 3, '0', STR_PAD_LEFT);
+    }
+    public function getNamaPemasokAttribute(): string
+    {
+        return $this->pemasok?->nama_pemasok ?? '— Pembelian Langsung';
     }
 
     public function pemasok()

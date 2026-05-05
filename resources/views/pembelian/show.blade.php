@@ -24,7 +24,11 @@
                         </div>
                         <div class="col-sm-6 col-md-3">
                             <div class="text-muted small">Pemasok</div>
-                            <div class="fw-semibold">{{ $pembelian->pemasok->nama_pemasok }}</div>
+                            @if ($pembelian->pemasok)
+                                <div class="fw-semibold">{{ $pembelian->pemasok->nama_pemasok }}</div>
+                            @else
+                                <div class="text-muted fst-italic">— Pembelian Langsung / Pasar</div>
+                            @endif
                         </div>
                         <div class="col-sm-6 col-md-3">
                             <div class="text-muted small">Diinput Oleh</div>

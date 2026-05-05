@@ -14,7 +14,7 @@ class StorePembelianRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pemasok_id' => ['required', 'exists:pemasoks,id'],
+            'pemasok_id' => ['nullable', 'exists:pemasoks,id'],
             'tanggal_pembelian' => ['required', 'date', 'before_or_equal:today'],
             'keterangan' => ['nullable', 'string', 'max:500'],
             'items' => ['required', 'array', 'min:1'],
