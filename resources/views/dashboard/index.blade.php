@@ -5,6 +5,7 @@
 
 @section('content')
 
+    {{-- Alert stok kritis --}}
     @if ($bahanKritisList->count() > 0)
         <div class="alert-stok-kritis mb-3 d-flex align-items-start gap-2">
             <i class="bi bi-exclamation-triangle-fill text-warning mt-1"></i>
@@ -17,6 +18,7 @@
         </div>
     @endif
 
+    {{-- Stat Cards --}}
     <div class="row g-3 mb-4">
         <div class="col-sm-6 col-xl-3">
             <div class="card stat-card h-100">
@@ -68,19 +70,65 @@
     </div>
 
     <div class="row g-3 mb-3">
+        {{-- ── GRAFIK DENGAN NAVIGASI ─────────────────────────── --}}
         <div class="col-lg-7">
-            <div class="card h-100">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <span class="card-title">Aktivitas Stok 6 Bulan Terakhir</span>
+            <div class="card h-100" style="position:relative">
+                <div class="card-header d-flex align-items-center gap-2 flex-wrap">
+                    <span class="card-title me-auto">Aktivitas Stok</span>
+
+                    {{-- Kontrol navigasi --}}
+                    <div class="d-flex align-items-center gap-1">
+                        <button id="btnPrev" class="btn btn-sm btn-outline-secondary px-2" title="Periode sebelumnya">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <span id="labelPeriode" class="badge bg-light text-dark border fw-semibold"
+                            style="min-width:150px;text-align:center;font-size:0.78rem;padding:.35rem .6rem">
+                            Memuat...
+                        </span>
+                        <button id="btnNext" class="btn btn-sm btn-outline-secondary px-2" title="Periode berikutnya"
+                            disabled>
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    {{-- Pilih rentang --}}
+                    <select id="selectRange" class="form-select form-select-sm" style="width:auto">
+                        <option value="6" selected>6 Bulan</option>
+                        <option value="3">3 Bulan</option>
+                        <option value="12">12 Bulan</option>
+                    </select>
                 </div>
-                <div class="card-body">
-                    <div style="position:relative; height:220px; width:100%">
+
+                <div class="card-body" style="position:relative">
+                    <div style="position:relative;height:220px;width:100%">
                         <canvas id="chartAktivitas"></canvas>
                     </div>
+
+                    {{-- Loading overlay --}}
+                    <div id="chartLoading"
+                        style="display:none;position:absolute;inset:0;background:rgba(255,255,255,0.75);
+                            align-items:center;justify-content:center;border-radius:0 0 12px 12px;z-index:10">
+                        <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+                        <span class="small text-muted">Memuat data...</span>
+                    </div>
+                </div>
+
+                {{-- Summary footer --}}
+                <div class="card-footer bg-transparent border-top d-flex gap-4 py-2 px-3">
+                    <div class="small">
+                        <span class="text-muted">Total Pembelian:</span>
+                        <strong id="summaryPembelian" class="ms-1" style="color:#e65c1e">—</strong>
+                    </div>
+                    <div class="small">
+                        <span class="text-muted">Total Pemakaian:</span>
+                        <strong id="summaryPemakaian" class="ms-1 text-success">—</strong>
+                    </div>
+                    <div class="ms-auto small text-muted" id="summaryNote"></div>
                 </div>
             </div>
         </div>
 
+        {{-- Rekomendasi EOQ --}}
         <div class="col-lg-5">
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center justify-content-between">
@@ -91,7 +139,8 @@
                     @forelse($rekomendasiEoq as $eoq)
                         <div class="d-flex align-items-center gap-3 px-3 py-2 border-bottom">
                             <div
-                                style="width:36px;height:36px;background:#fff0e6;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                                style="width:36px;height:36px;background:#fff0e6;border-radius:8px;
+                                display:flex;align-items:center;justify-content:center;flex-shrink:0">
                                 <i class="bi bi-arrow-repeat text-warning"></i>
                             </div>
                             <div style="min-width:0">
@@ -118,13 +167,15 @@
     </div>
 
     <div class="row g-3">
+        {{-- Pembelian terbaru --}}
         @if (auth()->user()->isAdmin() || auth()->user()->isPemilik())
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <span class="card-title">Pembelian Terbaru</span>
                         @if (auth()->user()->isAdmin())
-                            <a href="{{ route('pembelian.index') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                            <a href="{{ route('pembelian.index') }}" class="btn btn-sm btn-outline-primary">Lihat
+                                Semua</a>
                         @endif
                     </div>
                     <div class="card-body p-0">
@@ -139,12 +190,13 @@
                             <tbody>
                                 @forelse($pembelianTerbaru as $p)
                                     <tr>
-                                        <td><a href="{{ route('pembelian.show', $p) }}"
+                                        <td>
+                                            <a href="{{ route('pembelian.show', $p) }}"
                                                 class="text-decoration-none fw-semibold">{{ $p->nomor_transaksi }}</a>
                                             <div class="text-muted" style="font-size:0.75rem">
                                                 {{ $p->tanggal_pembelian->format('d M Y') }}</div>
                                         </td>
-                                        <td class="small">{{ $p->pemasok?->nama_pemasok ?? '— Pembelian Langsung' }}</td>
+                                        <td class="small">{{ $p->pemasok?->nama_pemasok ?? '— Langsung' }}</td>
                                         <td class="small fw-semibold">Rp {{ number_format($p->total_harga, 0, ',', '.') }}
                                         </td>
                                     </tr>
@@ -161,6 +213,7 @@
             </div>
         @endif
 
+        {{-- Permintaan pending --}}
         @if (auth()->user()->isAdmin())
             <div class="col-lg-6">
                 <div class="card">
@@ -188,10 +241,8 @@
                                                 {{ $pm->tanggal_permintaan->format('d M Y') }}</div>
                                         </td>
                                         <td class="small">{{ $pm->pengaju->name }}</td>
-                                        <td>
-                                            <a href="{{ route('permintaan-bahan.show', $pm) }}"
-                                                class="btn btn-sm btn-outline-primary">Proses</a>
-                                        </td>
+                                        <td><a href="{{ route('permintaan-bahan.show', $pm) }}"
+                                                class="btn btn-sm btn-outline-primary">Proses</a></td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -243,28 +294,38 @@
 
 @push('scripts')
     <script>
+        // ── STATE ────────────────────────────────────────────────────────────────────
+        let offsetBulan = 0; // 0 = periode paling kini, negatif = geser ke masa lalu
+        let jumlahBulan = 6; // berapa bulan yang ditampilkan sekaligus
+        let chart = null;
+        let isFetching = false;
+
+        // ── INISIALISASI CHART ───────────────────────────────────────────────────────
         const ctx = document.getElementById('chartAktivitas').getContext('2d');
-        new Chart(ctx, {
+        chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: @json($grafikData['labels']),
+                labels: [],
                 datasets: [{
                         label: 'Pembelian',
-                        data: @json($grafikData['pembelian']),
+                        data: [],
                         backgroundColor: 'rgba(230,92,30,0.75)',
-                        borderRadius: 6,
+                        borderRadius: 6
                     },
                     {
                         label: 'Pemakaian',
-                        data: @json($grafikData['pemakaian']),
+                        data: [],
                         backgroundColor: 'rgba(25,135,84,0.65)',
-                        borderRadius: 6,
-                    }
+                        borderRadius: 6
+                    },
                 ]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // FIX: false agar chart ikut tinggi wrapper, bukan rasio bawaan
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 250
+                },
                 plugins: {
                     legend: {
                         position: 'bottom'
@@ -274,7 +335,8 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 1
+                            stepSize: 1,
+                            precision: 0
                         },
                         grid: {
                             color: '#f0f2f5'
@@ -288,5 +350,85 @@
                 }
             }
         });
+
+        // ── FUNGSI FETCH DATA ─────────────────────────────────────────────────────────
+        async function fetchGrafikData() {
+            if (isFetching) return;
+            isFetching = true;
+
+            // Tampilkan loading
+            const loading = document.getElementById('chartLoading');
+            loading.style.display = 'flex';
+            document.getElementById('btnPrev').disabled = true;
+            document.getElementById('btnNext').disabled = true;
+
+            try {
+                const url = `{{ route('dashboard.chart') }}?offset=${offsetBulan}&bulan=${jumlahBulan}`;
+                const res = await fetch(url, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (!res.ok) throw new Error('Response tidak OK: ' + res.status);
+
+                const data = await res.json();
+
+                // Update chart data
+                chart.data.labels = data.labels;
+                chart.data.datasets[0].data = data.pembelian;
+                chart.data.datasets[1].data = data.pemakaian;
+                chart.update();
+
+                // Update label periode di badge
+                document.getElementById('labelPeriode').textContent = data.periode;
+
+                // Hitung dan tampilkan total summary
+                const totalP = data.pembelian.reduce((a, b) => a + b, 0);
+                const totalK = data.pemakaian.reduce((a, b) => a + b, 0);
+                document.getElementById('summaryPembelian').textContent = totalP + ' transaksi';
+                document.getElementById('summaryPemakaian').textContent = totalK + ' transaksi';
+
+                // Info navigasi
+                const noteEl = document.getElementById('summaryNote');
+                noteEl.textContent = offsetBulan < 0 ?
+                    `Melihat ${Math.abs(offsetBulan)} bulan yang lalu` :
+                    'Periode terkini';
+
+            } catch (err) {
+                console.error('Gagal memuat data grafik:', err);
+                document.getElementById('labelPeriode').textContent = 'Gagal memuat';
+            } finally {
+                loading.style.display = 'none';
+                isFetching = false;
+
+                // Tombol Prev selalu aktif (bisa terus ke masa lalu)
+                document.getElementById('btnPrev').disabled = false;
+                // Tombol Next hanya aktif jika belum di periode paling kini
+                document.getElementById('btnNext').disabled = (offsetBulan >= 0);
+            }
+        }
+
+        // ── EVENT LISTENERS ───────────────────────────────────────────────────────────
+        document.getElementById('btnPrev').addEventListener('click', () => {
+            offsetBulan -= jumlahBulan; // geser ke kiri (lebih jauh ke masa lalu)
+            fetchGrafikData();
+        });
+
+        document.getElementById('btnNext').addEventListener('click', () => {
+            if (offsetBulan >= 0) return;
+            offsetBulan += jumlahBulan; // geser ke kanan (lebih dekat ke sekarang)
+            if (offsetBulan > 0) offsetBulan = 0;
+            fetchGrafikData();
+        });
+
+        document.getElementById('selectRange').addEventListener('change', (e) => {
+            jumlahBulan = parseInt(e.target.value);
+            offsetBulan = 0; // reset ke periode paling kini saat ganti range
+            fetchGrafikData();
+        });
+
+        // Load pertama kali
+        fetchGrafikData();
     </script>
 @endpush

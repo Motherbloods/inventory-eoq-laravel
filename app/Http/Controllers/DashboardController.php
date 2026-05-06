@@ -7,6 +7,7 @@ use App\Models\EoqSetting;
 use App\Models\PembelianBahanBaku;
 use App\Models\PemakaianBahanBaku;
 use App\Models\PermintaanBahan;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -44,8 +45,6 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        $grafikData = $this->getGrafikData();
-
         return view('dashboard.index', compact(
             'totalBahan',
             'bahanKritis',
@@ -56,30 +55,46 @@ class DashboardController extends Controller
             'pembelianTerbaru',
             'pemakaianTerbaru',
             'permintaanPending',
-            'grafikData'
         ));
     }
 
-    private function getGrafikData(): array
+    public function chartData(Request $request)
     {
-        $bulan = collect(range(5, 0))->map(function ($i) {
-            return now()->subMonths($i);
+        $jumlahBulan = max(1, min(24, (int) $request->get('bulan', 6)));
+        $offset = (int) $request->get('offset', 0);
+
+        if ($offset > 0)
+            $offset = 0;
+
+        $bulanList = collect(range($jumlahBulan - 1, 0))->map(function ($i) use ($offset) {
+            return now()->addMonths($offset)->subMonths($i);
         });
 
-        $labels = $bulan->map(fn($b) => $b->translatedFormat('M Y'))->toArray();
-
-        $pembelian = $bulan->map(function ($b) {
-            return PembelianBahanBaku::whereYear('tanggal_pembelian', $b->year)
+        $labels = $bulanList->map(fn($b) => $b->translatedFormat('M Y'))->toArray();
+        $pembelian = $bulanList->map(
+            fn($b) =>
+            PembelianBahanBaku::whereYear('tanggal_pembelian', $b->year)
                 ->whereMonth('tanggal_pembelian', $b->month)
-                ->count();
-        })->toArray();
-
-        $pemakaian = $bulan->map(function ($b) {
-            return PemakaianBahanBaku::whereYear('tanggal_pemakaian', $b->year)
+                ->count()
+        )->toArray();
+        $pemakaian = $bulanList->map(
+            fn($b) =>
+            PemakaianBahanBaku::whereYear('tanggal_pemakaian', $b->year)
                 ->whereMonth('tanggal_pemakaian', $b->month)
-                ->count();
-        })->toArray();
+                ->count()
+        )->toArray();
 
-        return compact('labels', 'pembelian', 'pemakaian');
+        $awal = $bulanList->first()->translatedFormat('M Y');
+        $akhir = $bulanList->last()->translatedFormat('M Y');
+        $periode = ($awal === $akhir) ? $awal : "$awal – $akhir";
+
+        return response()->json([
+            'labels' => $labels,
+            'pembelian' => $pembelian,
+            'pemakaian' => $pemakaian,
+            'periode' => $periode,
+            'offset' => $offset,
+            'bulan' => $jumlahBulan,
+        ]);
     }
 }
