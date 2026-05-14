@@ -24,6 +24,12 @@ return new class extends Migration {
                 ->comment('Biaya simpan per satuan per tahun (H)');
             $table->integer('lead_time_hari')->default(1)
                 ->comment('Waktu tunggu kedatangan bahan (hari)');
+            $table->unsignedTinyInteger('service_level')->default(95)
+                ->comment('Tingkat layanan / service level dalam persen (80–99)');
+            $table->decimal('std_dev_permintaan', 10, 4)->default(0)
+                ->comment('Standar deviasi permintaan harian (σ)');
+            $table->decimal('safety_stock', 10, 2)->nullable()
+                ->comment('Safety Stock = Z × σ × √(lead_time_hari)');
             $table->decimal('eoq_result', 10, 2)->nullable()
                 ->comment('Hasil Q* = sqrt(2DS/H)');
             $table->decimal('reorder_point', 10, 2)->nullable()

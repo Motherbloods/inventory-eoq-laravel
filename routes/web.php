@@ -65,7 +65,7 @@ Route::middleware(['auth', 'active'])->group(function () {
         Route::post('/eoq/setting', [EoqController::class, 'storeSetting'])->name('eoq.storeSetting');
         Route::post('/eoq/hitung/{bahanBaku}', [EoqController::class, 'hitung'])->name('eoq.hitung');
         Route::post('/eoq/hitung-semua', [EoqController::class, 'hitungSemua'])->name('eoq.hitungSemua');
-
+        Route::get('/eoq/std-dev/{bahanBaku}', [EoqController::class, 'hitungStdDev'])->name('eoq.stddev');
 
         Route::put('/permintaan-bahan/{permintaan}/approve', [PermintaanBahanController::class, 'approve'])->name('permintaan-bahan.approve');
         Route::put('/permintaan-bahan/{permintaan}/tolak', [PermintaanBahanController::class, 'tolak'])->name('permintaan-bahan.tolak');
