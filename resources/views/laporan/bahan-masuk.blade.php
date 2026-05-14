@@ -71,7 +71,13 @@
                             <td class="small text-muted">{{ $d->pembelian->tanggal_pembelian->format('d M Y') }}</td>
                             <td class="small fw-semibold">{{ $d->pembelian->nomor_transaksi }}</td>
                             <td class="small fw-semibold">{{ $d->bahanBaku->nama_bahan }}</td>
-                            <td class="small">{{ $d->pembelian->pemasok->nama_pemasok }}</td>
+                            <td class="small">
+                                @if ($d->pembelian->pemasok)
+                                    {{ $d->pembelian->pemasok->nama_pemasok }}
+                                @else
+                                    <span class="text-muted fst-italic">— Langsung / Pasar</span>
+                                @endif
+                            </td>
                             <td class="text-end small fw-semibold text-success">
                                 +{{ number_format($d->jumlah, 2, ',', '.') }}
                                 {{ $d->bahanBaku->satuan }}</td>

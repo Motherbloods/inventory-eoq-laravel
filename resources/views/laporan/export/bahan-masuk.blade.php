@@ -175,7 +175,7 @@
                     <td>{{ $d->pembelian->tanggal_pembelian->format('d M Y') }}</td>
                     <td>{{ $d->pembelian->nomor_transaksi }}</td>
                     <td>{{ $d->bahanBaku->nama_bahan }}</td>
-                    <td>{{ $d->pembelian->pemasok->nama_pemasok }}</td>
+                    <td>{{ $d->pembelian->pemasok ? $d->pembelian->pemasok->nama_pemasok : '— Langsung / Pasar' }}</td>
                     <td class="text-end">{{ number_format($d->jumlah, 2, ',', '.') }} {{ $d->bahanBaku->satuan }}</td>
                     <td class="text-end">{{ number_format($d->harga_satuan, 0, ',', '.') }}</td>
                     <td class="text-end">{{ number_format($d->subtotal, 0, ',', '.') }}</td>
